@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shopify Clone - Home</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <h1 class="logo">VickyCart</h1>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li id="profileLink" style="display: none;"><a href="profile.html">Profile</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Welcome to VickyCart</h2>
+    <p>Your one-stop shop for unique products. </p>
+    <a href="shop.html" class="btn">Start Shopping</a>
+  </section>
+
+  <section class="features">
+    <h3>Why Shop With Us?</h3>
+    <div class="feature-boxes">
+      <div class="box">
+        <h4>Fast Delivery</h4>
+        <p>Get your products within 2-3 days.</p>
+      </div>
+      <div class="box">
+        <h4>24/7 Support</h4>
+        <p>We are here for you always.</p>
+      </div>
+      <div class="box">
+        <h4>Easy Returns</h4>
+        <p>Return products within 7 days.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 VickyCart. All rights reserved.</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCpdD1Plo-4Mjhnq9N3EDnpMwfATPKTplI",
+    authDomain: "vickycart-c7b17.firebaseapp.com",
+    projectId: "vickycart-c7b17",
+    storageBucket: "vickycart-c7b17.appspot.com",
+    messagingSenderId: "551605666716",
+    appId: "1:551605666716:web:07daf321c83d9e1591fe59"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+</script>
+<script>
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      document.getElementById("profileLink").style.display = "inline-block";
+      // Optionally show user's name or logout button
+    }
+  });
+</script>
+<script src="chatbot.js"></script>
+<script src="//code.tidio.co/tt3puj8sleyo7kg9ktfnqgr6ryjkq5cs.js" async></script>
+</body>
+</html>
+
+

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login / Signup - VickyCart</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .auth-container {
+      max-width: 400px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    .auth-container input {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+    }
+    .auth-container button {
+      width: 100%;
+      padding: 0.6rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    .toggle-link {
+      margin-top: 1rem;
+      text-align: center;
+      cursor: pointer;
+      color: blue;
+    }
+    .forgot-password-box input,
+.forgot-password-box button {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="navbar">
+      <h1 class="logo">VickyCart</h1>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+  <div class="auth-container">
+    <h2 id="form-title">Login</h2>
+
+    <input type="text" id="loginInput" placeholder="Email or Mobile" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <div id="phone-auth-box">
+  <h3>Login via Phone</h3>
+  
+  <input type="text" id="phoneNumber" placeholder="+91XXXXXXXXXX" />
+  <div id="recaptcha-container"></div>
+  <button onclick="sendOTP()">Send OTP</button>
+
+  <input type="text" id="otpCode" placeholder="Enter OTP" style="display: none;" />
+  <button onclick="verifyOTP()" style="display: none;" id="verifyBtn">Verify OTP</button>
+</div>
+
+
+    <!-- Signup-only fields -->
+    <input type="text" id="username" placeholder="Full Name (Signup only)" style="display: none;" />
+
+    <button id="authBtn" onclick="handleAuth()">Login</button>
+
+    <div class="toggle-link" onclick="toggleForm()">Don't have an account? Signup</div>
+    <div class="toggle-link" onclick="showForgotBox()">Forgot Password?</div>
+
+    <!-- 🔐 Hidden Forgot Password Section -->
+    <div class="forgot-password-box" id="forgotBox" style="display: none; margin-top: 1rem;">
+      <input type="email" id="forgotEmail" placeholder="Enter email to reset password" />
+      <button onclick="forgotPassword()">Send Reset Email</button>
+    </div>
+  </div>
+</main>
+
+  <!-- ✅ Firebase SDKs using COMPAT VERSION (for older syntax like firebase.auth()) -->
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCpdD1Plo-4Mjhnq9N3EDnpMwfATPKTplI",
+      authDomain: "vickycart-c7b17.firebaseapp.com",
+      projectId: "vickycart-c7b17",
+      storageBucket: "vickycart-c7b17.appspot.com",
+      messagingSenderId: "551605666716",
+      appId: "1:551605666716:web:07daf321c83d9e1591fe59"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let isLogin = true;
+
+    function toggleForm() {
+    isLogin = !isLogin;
+    document.getElementById("form-title").textContent = isLogin ? "Login" : "Signup";
+    document.getElementById("authBtn").textContent = isLogin ? "Login" : "Signup";
+    document.getElementById("username").style.display = isLogin ? "none" : "block";
+   }
+    function handleAuth() {
+  const loginInput = document.getElementById("loginInput").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const username = document.getElementById("username").value.trim();
+
+  const isEmail = loginInput.includes("@");
+
+  if (isLogin) {
+    if (!loginInput || !password) {
+      alert("Please enter your email/mobile and password.");
+      return;
+    }
+
+    if (isEmail) {
+      // Email login
+      auth.signInWithEmailAndPassword(loginInput, password)
+        .then(() => {
+          alert("Login successful!");
+          localStorage.setItem("loggedInUser", loginInput);
+          window.location.href = "index.html";
+        })
+        .catch(err => {
+          alert("Login failed: " + err.message);
+        });
+    } else {
+      // Mobile login → Fetch email by mobile from Firestore
+      db.collection("users").where("mobile", "==", loginInput).get()
+        .then(snapshot => {
+          if (snapshot.empty) throw new Error("Mobile number not found.");
+          const userDoc = snapshot.docs[0];
+          const email = userDoc.data().email;
+          return auth.signInWithEmailAndPassword(email, password);
+        })
+        .then(() => {
+          alert("Login successful!");
+          localStorage.setItem("loggedInUser", loginInput);
+          window.location.href = "index.html";
+        })
+        .catch(err => {
+          alert("Login failed: " + err.message);
+        });
+    }
+
+  } else {
+    // Signup
+    if (!username || !loginInput || !password) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    if (!isEmail) {
+      alert("Signup requires a valid email address.");
+      return;
+    }
+
+    auth.createUserWithEmailAndPassword(loginInput, password)
+      .then((cred) => {
+        return db.collection("users").doc(cred.user.uid).set({
+          username,
+          email: loginInput,
+          mobile: document.getElementById("mobile").value.trim(),
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      })
+      .then(() => {
+        alert("Signup successful! You can now log in.");
+        toggleForm();
+      })
+      .catch(err => {
+        alert("Signup failed: " + err.message);
+      });
+  }
+}
+function showForgotBox() {
+  const box = document.getElementById("forgotBox");
+  box.style.display = box.style.display === "none" ? "block" : "none";
+}
+
+function forgotPassword() {
+  const email = document.getElementById("forgotEmail").value.trim();
+  if (!email) {
+    alert("Please enter your registered email.");
+    return;
+  }
+
+  auth.sendPasswordResetEmail(email)
+    .then(() => {
+      alert("Password reset email sent!");
+      document.getElementById("forgotEmail").value = "";
+      document.getElementById("forgotBox").style.display = "none";
+    })
+    .catch(err => {
+      alert("Error: " + err.message);
+    });
+}
+let confirmationResult; // Will hold Firebase OTP session
+
+window.onload = function () {
+  // Initialize reCAPTCHA when the page loads
+  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+    size: 'normal',
+    callback: function (response) {
+      console.log("reCAPTCHA verified");
+    },
+    'expired-callback': function () {
+      alert("reCAPTCHA expired. Please try again.");
+    }
+  });
+  recaptchaVerifier.render();
+};
+
+function sendOTP() {
+  const phoneNumber = document.getElementById("phoneNumber").value.trim();
+  if (!phoneNumber.startsWith("+91")) {
+    alert("Please enter full phone number with +91.");
+    return;
+  }
+
+  firebase.auth().signInWithPhoneNumber(phoneNumber, window.recaptchaVerifier)
+    .then((result) => {
+      confirmationResult = result;
+      alert("OTP sent!");
+      document.getElementById("otpCode").style.display = "block";
+      document.getElementById("verifyBtn").style.display = "block";
+    })
+    .catch((error) => {
+      alert("Error sending OTP: " + error.message);
+    });
+}
+
+function verifyOTP() {
+  const code = document.getElementById("otpCode").value.trim();
+  if (!code) {
+    alert("Enter the OTP.");
+    return;
+  }
+
+  confirmationResult.confirm(code)
+    .then((result) => {
+      const user = result.user;
+      alert("Phone verification successful!");
+      // Save or redirect user
+      localStorage.setItem("loggedInUser", user.phoneNumber);
+      window.location.href = "index.html";
+    })
+    .catch((error) => {
+      alert("Incorrect OTP: " + error.message);
+    });
+}
+
+
+  </script>
+  <script src="chatbot.js"></script>
+  <script src="//code.tidio.co/tt3puj8sleyo7kg9ktfnqgr6ryjkq5cs.js" async></script>
+</body>
+</html>

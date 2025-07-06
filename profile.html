@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile - VickyCart</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .profile-box {
+      max-width: 400px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    .profile-box h2 {
+      margin-bottom: 1rem;
+    }
+    .profile-box p {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="navbar">
+      <h1 class="logo">VickyCart</h1>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="#" onclick="logout()">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="profile-box" id="profile">
+      <h2>Welcome!</h2>
+      <!-- Profile content will be inserted by JS -->
+    </div>
+  </main>
+
+  <!-- ✅ Firebase SDKs (Compat version) -->
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore-compat.js"></script>
+
+  <!-- ✅ Firebase Config & Initialization -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCpdD1Plo-4Mjhnq9N3EDnpMwfATPKTplI",
+      authDomain: "vickycart-c7b17.firebaseapp.com",
+      projectId: "vickycart-c7b17",
+      storageBucket: "vickycart-c7b17.appspot.com",
+      messagingSenderId: "551605666716",
+      appId: "1:551605666716:web:07daf321c83d9e1591fe59"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>
+
+  <!-- ✅ Auth Logic (AFTER Firebase initialized) -->
+  <script>
+    function logout() {
+      auth.signOut().then(() => {
+        alert("Logged out successfully.");
+        window.location.href = "login.html";
+      });
+    }
+
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        const uid = user.uid;
+        db.collection("users").doc(uid).get()
+          .then((doc) => {
+            if (doc.exists) {
+              const data = doc.data();
+              const profileBox = document.getElementById("profile");
+              profileBox.innerHTML += `
+                <p><strong>Username:</strong> ${data.username || 'N/A'}</p>
+                <p><strong>Email:</strong> ${data.email}</p>
+                <p><strong>Mobile:</strong> ${data.mobile}</p>
+              `;
+            } else {
+              alert("Profile not found in database.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error getting profile:", error);
+            alert("Something went wrong while loading your profile.");
+          });
+      } else {
+        alert("Please login to view profile.");
+        window.location.href = "login.html";
+      }
+    });
+  </script>
+<script src="chatbot.js"></script>
+<script src="//code.tidio.co/tt3puj8sleyo7kg9ktfnqgr6ryjkq5cs.js" async></script>
+</body>
+</html>

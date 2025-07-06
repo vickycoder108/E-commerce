@@ -1,0 +1,72 @@
+<!-- checkout.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VickyCart - Checkout</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <h1 class="logo">VickyCart</h1>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2 class="page-title">Checkout</h2>
+
+    <div class="checkout-container">
+      <form id="checkout-form">
+        <label>
+          Full Name:
+          <input type="text" required />
+        </label>
+
+        <label>
+          Address:
+          <textarea required></textarea>
+        </label>
+
+        <label>
+          Email:
+          <input type="email" required />
+        </label>
+
+        <label>
+          Payment Method:
+          <select required>
+            <option value="">Select</option>
+            <option value="cod">Cash on Delivery</option>
+            <option value="card">Credit/Debit Card</option>
+          </select>
+        </label>
+
+        <div id="checkout-summary">Total: ₹0</div>
+
+        <button type="submit" class="btn">Place Order</button>
+      </form>
+
+      <div id="thank-you-message" style="display:none; text-align:center; margin-top:2rem;">
+        <h3>🎉 Thank you for your order!</h3>
+        <p>Your items will be delivered soon.</p>
+        <a href="index.html" class="btn">Back to Home</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 VickyCart. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="chatbot.js"></script>
+<script src="//code.tidio.co/tt3puj8sleyo7kg9ktfnqgr6ryjkq5cs.js" async></script>
+</body>
+</html>

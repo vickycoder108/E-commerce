@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us - VickyCart</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .contact-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+    }
+    .contact-container input, .contact-container textarea {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+    }
+    .contact-container button {
+      padding: 0.7rem 1.4rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    .success-message {
+      color: green;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="navbar">
+      <h1 class="logo">VickyCart</h1>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="contact-container">
+      <h2>Contact Us</h2>
+      <p>Have any questions or feedback? Let us know!</p>
+
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+      <button onclick="submitContact()">Send Message</button>
+
+      <div class="success-message" id="success-msg"></div>
+    </div>
+  </main>
+
+  <!-- Firebase SDKs (Compat version) -->
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCpdD1Plo-4Mjhnq9N3EDnpMwfATPKTplI",
+      authDomain: "vickycart-c7b17.firebaseapp.com",
+      projectId: "vickycart-c7b17",
+      storageBucket: "vickycart-c7b17.appspot.com",
+      messagingSenderId: "551605666716",
+      appId: "1:551605666716:web:07daf321c83d9e1591fe59"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    function submitContact() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+      const success = document.getElementById("success-msg");
+
+      if (!name || !email || !message) {
+        alert("Please fill all the fields.");
+        return;
+      }
+
+      db.collection("feedback").add({
+        name,
+        email,
+        message,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      })
+      .then(() => {
+        success.textContent = "Thanks for contacting us, " + name + "! We'll get back to you soon.";
+        document.getElementById("name").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("message").value = "";
+      })
+      .catch((error) => {
+        console.error("Error storing feedback:", error);
+        alert("Something went wrong. Please try again.");
+      });
+    }
+  </script>
+<script src="chatbot.js"></script>
+<script src="//code.tidio.co/tt3puj8sleyo7kg9ktfnqgr6ryjkq5cs.js" async></script>
+</body>
+</html>

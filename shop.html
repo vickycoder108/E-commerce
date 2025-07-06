@@ -1,0 +1,49 @@
+<!-- shop.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VickyCart - Shop</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <h1 class="logo">VickyCart</h1>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2 class="page-title">Browse Our Products</h2>
+    <div class="filter-bar">
+  <input type="text" id="searchInput" placeholder="Search products..." />
+  <select id="categoryFilter">
+    <option value="All">All Categories</option>
+    <option value="Electronics">Electronics</option>
+    <option value="Accessories">Accessories</option>
+    <option value="Fitness">Fitness</option>
+    <option value="Stationery">Stationery</option>
+    <option value="Home">Home</option>
+  </select>
+</div>
+
+    <div class="product-grid" id="product-list">
+      <!-- Products will be dynamically inserted here -->
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 VickyCart. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="chatbot.js"></script>
+<script src="//code.tidio.co/tt3puj8sleyo7kg9ktfnqgr6ryjkq5cs.js" async></script>
+</body>
+</html>
