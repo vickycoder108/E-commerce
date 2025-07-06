@@ -4,7 +4,7 @@ const products = [
     id: 1,
     name: "Wireless Earbuds",
     price: 1299,
-    image: "asset/earbuds1.jpg",
+    image: "assets/earbuds1.jpg",
     category: "Electronics",
     description: "High-quality wireless earbuds with noise cancellation and long battery life.",
     rating: 4.5
@@ -49,7 +49,7 @@ const products = [
     id: 6,
     name: "Notebook Combo Set",
     price: 349,
-    image: "images/notebookcombo.jpg",
+    image: "assets/notebookcombo.jpg",
     category: "Stationery",
     description: "Pack of 5 designer notebooks for school and office.",
     rating: 4.2
@@ -58,7 +58,7 @@ const products = [
     id: 7,
     name: "Phone Tripod Stand",
     price: 499,
-    image: "images/tripod.jpg",
+    image: "assets/tripod.jpg",
     category: "Accessories",
     description: "Lightweight tripod stand for mobile photography.",
     rating: 4.1
@@ -67,7 +67,7 @@ const products = [
     id: 8,
     name: "Portable Charger 10000mAh",
     price: 899,
-    image: "images/powerbank.jpg",
+    image: "assets/powerbank.jpg",
     category: "Electronics",
     description: "Fast-charging power bank with dual USB output.",
     rating: 4.6
@@ -76,7 +76,7 @@ const products = [
     id: 9,
     name: "Desk Lamp with Touch Control",
     price: 749,
-    image: "images/desklamp.jpg",
+    image: "assets/desklamp.jpg",
     category: "Home",
     description: "LED desk lamp with 3 brightness modes and touch panel.",
     rating: 4.3
@@ -85,7 +85,7 @@ const products = [
     id: 10,
     name: "Fitness Resistance Bands Set",
     price: 599,
-    image: "images/resistancebands.jpg",
+    image: "assets/resistancebands.jpg",
     category: "Fitness",
     description: "Set of 5 latex resistance bands for home workouts.",
     rating: 4.4
@@ -94,7 +94,7 @@ const products = [
     id: 11,
     name: "Neon Wall Clock",
     price: 1299,
-    image: "images/wallclock.jpg",
+    image: "assets/wallclock.jpg",
     category: "Home",
     description: "Vintage neon wall clock for bedroom or office decor.",
     rating: 4.5
@@ -103,7 +103,7 @@ const products = [
     id: 12,
     name: "Bluetooth Neckband",
     price: 1099,
-    image: "images/neckband.jpg",
+    image: "assets/neckband.jpg",
     category: "Electronics",
     description: "Comfortable neckband with deep bass and 18-hour battery.",
     rating: 4.3
@@ -112,7 +112,7 @@ const products = [
     id: 13,
     name: "Portable Laptop Table",
     price: 899,
-    image: "images/laptoptable.jpg",
+    image: "assets/laptoptable.jpg",
     category: "Accessories",
     description: "Foldable laptop table with cup holder and drawer.",
     rating: 4.2
@@ -121,7 +121,7 @@ const products = [
     id: 14,
     name: "Water Bottle 1L",
     price: 299,
-    image: "images/waterbottle.jpg",
+    image: "assets/waterbottle.jpg",
     category: "Fitness",
     description: "Leak-proof BPA-free water bottle with motivational quotes.",
     rating: 4.6
@@ -130,7 +130,7 @@ const products = [
   id: 15,
   name: "Mini Plant Pot Set",
   price: 499,
-  image: "images/plantpots.jpg",
+  image: "assets/plantpots.jpg",
   category: "Home",
   description: "Set of 3 ceramic plant pots perfect for succulents and office desks.",
   rating: 4.4
@@ -139,7 +139,7 @@ const products = [
   id: 16,
   name: "LED String Lights",
   price: 399,
-  image: "images/stringlights.jpg",
+  image: "assets/stringlights.jpg",
   category: "Home",
   description: "Warm white LED string lights ideal for room decoration and festivals.",
   rating: 4.5
@@ -148,7 +148,7 @@ const products = [
   id: 17,
   name: "Touchscreen Gloves",
   price: 299,
-  image: "images/gloves.jpg",
+  image: "assets/gloves.jpg",
   category: "Accessories",
   description: "Winter gloves compatible with all smartphones and tablets.",
   rating: 4.2
@@ -157,7 +157,7 @@ const products = [
   id: 18,
   name: "USB Table Fan",
   price: 649,
-  image: "images/tablefan.jpg",
+  image: "assets/tablefan.jpg",
   category: "Electronics",
   description: "Portable USB-powered fan with adjustable speed settings.",
   rating: 4.3
@@ -166,7 +166,7 @@ const products = [
   id: 19,
   name: "Reusable Shopping Bags (Pack of 5)",
   price: 199,
-  image: "images/shoppingbags.jpg",
+  image: "assets/shoppingbags.jpg",
   category: "Home",
   description: "Eco-friendly, foldable grocery bags with vibrant prints.",
   rating: 4.6
@@ -175,7 +175,7 @@ const products = [
   id: 20,
   name: "Yoga Mat (6mm)",
   price: 999,
-  image: "images/yogamat.jpg",
+  image: "assets/yogamat.jpg",
   category: "Fitness",
   description: "Non-slip, lightweight yoga mat for workouts and meditation.",
   rating: 4.7
@@ -184,7 +184,7 @@ const products = [
   id: 21,
   name: "Magnetic Phone Holder for Car",
   price: 449,
-  image: "images/phoneholder.jpg",
+  image: "assets/phoneholder.jpg",
   category: "Accessories",
   description: "360° rotatable magnetic mount for safe driving experience.",
   rating: 4.4
@@ -193,7 +193,7 @@ const products = [
   id: 22,
   name: "Portable USB LED Light",
   price: 149,
-  image: "images/usbled.jpg",
+  image: "assets/usbled.jpg",
   category: "Electronics",
   description: "Plug-and-play LED light for laptops, keyboards, or power banks.",
   rating: 4.1
@@ -202,7 +202,7 @@ const products = [
   id: 23,
   name: "Noise Isolating Wired Earphones",
   price: 299,
-  image: "images/wiredearphones.jpg",
+  image: "assets/wiredearphones.jpg",
   category: "Electronics",
   description: "Stereo sound wired earphones with mic and tangle-free cable.",
   rating: 4.3
@@ -211,7 +211,7 @@ const products = [
   id: 24,
   name: "Hand Grip Strengthener",
   price: 379,
-  image: "images/handgrip.jpg",
+  image: "assets/handgrip.jpg",
   category: "Fitness",
   description: "Adjustable resistance hand gripper for strength training.",
   rating: 4.5
